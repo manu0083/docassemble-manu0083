@@ -1,0 +1,7 @@
+---
+mandatory: True
+question: Welcome!
+buttons:
+  - Exit: exit
+  - Restart: restart 
+---

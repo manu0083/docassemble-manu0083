@@ -45,7 +45,7 @@ def find_package_data(where='.', package='', exclude=standard_exclude, exclude_d
 setup(name='docassemble.manu0083',
       version='0.0.1',
       description=('A docassemble extension.'),
-      long_description='C1 Assessment: Create an app which completes a Federal Court Form 1 document.',
+      long_description='Modifying C1 to add additional functionality in C2_assessment  ',
       long_description_content_type='text/markdown',
       author='Aishwarya Manumari',
       author_email='manu0083@flinders.edu.au',
