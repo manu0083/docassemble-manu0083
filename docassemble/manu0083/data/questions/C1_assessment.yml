@@ -1,0 +1,166 @@
+# basic demo of using multiple endpoints for an interview 
+---
+objects:
+  - endpoint: DADict
+---
+# this is a welcome screen. WE can choose exit here
+# if we don;t wisht to accept the disclaimer 
+mandatory: True
+question: Welcome!
+subquestion: |
+  Welcome to the Federal Court Form 1 completion machine
+  
+  ***Disclaimer:***
+  **This advice is not to be taken as genuine legal advice and is not a substitute for you seeking independent legal advice.**
+  
+  If you continue you accept these terms.
+  
+buttons:
+  - "I accept and want to continue": continue
+  - "I do not accept": exit
+    url: http://www.courts.sa.gov.au
+---
+# This code block drives the interview. 
+# It detemines initial eligibility req have been met and if are direct user to the #'eligible' endpoint. Otherwise, to the 'ineligible' endpoint. 
+# Each endpoint displays an exit screen. For the purpose of this exercise the user # is eligible to continue if they are btw 18 & 65 && Aus citizen.
+# Note: This code block must be mandatory 
+# 1 mad block to drive the exe flow, send us to weather we choose to court & 
+# construct a form or choose an ineligible screen 
+mandatory: True 
+code:  |
+  if AMcourt == 'Federal Court' or AMcourt == 'Federal Circuit Court' :
+    endpoint['eligible']
+  else:
+    endpoint['ineligible']
+---
+question: Which Court
+subquestion: |
+  In which court will you file this form
+fields:
+  - Select court: AMcourt
+    choices:
+      - District Court
+      - Federal Court
+      - Ferderal Circuit Court
+      - Magistrates Court
+      - Supreme Court
+---
+# This is the ineligible endpoint
+event: endpoint['ineligible']
+question: Eligibility requirements not met
+subquestion:
+  It appears you do not meet our eligibility requirements. You cannot use this service.
+  
+  Put some nice text in here.
+  
+  Please contact ... for more assistance
+buttons:  
+  - Exit: exit
+    url: http://www.courts.sa.gov.au
+  - Restart: restart
+---
+# This is the eligible endpoint
+# u can use eligible endpoints to drive the rest of the questions 
+event: endpoint['eligible']
+question: You are eligible
+subquestion: |
+  Please contact
+  for more assistance
+  
+  Information Requested|Your Response 
+  ---|--- 
+  Applicant    | ${ AMapplicant_first_name } ${ AMapplicant_last_name }
+  Respondent   | ${ AMrespondent_first_name } ${ AMrespondent_last_name }
+  Court        | The ${AMstate} registry of the ${AMcourt} ${AMdivision} division.
+  Filing Date   | ${ format_date(AMfiling_date, format='d MMMM yyyy')}
+  Lawyer's name | ${ AMlawyer_name } 
+  Law firm      | ${ AMlaw_firm }
+  Lawyer is representing | the ${ AMrepresenting }
+  Lawyer phone / fax | ${ AMphone } / ${AMfax }
+  Lawyer email | [${AMemail}](mailto:${AMemail})
+  Address for service | ${ AMaddress_for_service }
+attachments:
+  docx template file: FCA_form001_201108017619cf4e325bc82c05f21dd105e67ea08e384c9c08d2ff93acb5d92b70a1dfbe.docx
+  valid formats:
+     - pdf 
+buttons:
+  - Exit: exit
+  - Restart: restart
+---
+question: Name of Parties
+subquestion: |
+  Please enter the name of the first Applicant and the first Respondent.
+fields:
+  - Applicant's first name: AMapplicant_first_name
+    required: False
+  - Applicant's last name: AMapplicant_last_name
+  - Respondent's first name: AMrespondent_first_name
+    required: False 
+  - Respondent's last name: AMrespondent_last_name
+under: |
+  If the applicant or respondent is a company, leave the first name field blank and enter the compant name int he relevant last name field.
+---
+question: Court Information
+subquestion: |
+  Please select appropriate State and Division for your matter.
+fields:
+  - Select State: AMstate
+    choices:
+      - South Australia
+      - New South Wales
+      - Victoria
+      - Western Australia
+      - Tasmania
+      - Queensland
+  - Select Division: AMdivision
+    choices:
+      - Coporations
+      - Criminal 
+      - Employment
+      - General    
+---
+question: Filing Date
+subquestion: |
+  On what date will this form be filed?
+fields:
+  - no label: AMfiling_date
+    datatype: date
+---
+question: Lawyer's Details
+subquestion: |
+  Complete this information about the lawyer representing you
+fields:
+  - Full name of your lawyer: AMlawyer_name
+  - Who is the lawyer representing?: AMrepresenting
+    datatype: radio
+    choices:
+      - Applicant 
+      - Respondent
+  - Name of law firm: AMlaw_firm
+  - Law firm phone: AMphone
+  - Law firm fax: AMfax
+  - Law firm email: AMemail
+    datatype: email
+  - Address for service: AMaddress_for_service
+---
+# Generate the formatted date
+#code: |
+#  AMformatted_date = format_date(AMfiling_date, format='d MMMM yyyy')
+#---
+# format method for string b103
+code: |
+  if AMrepresenting == 'Applicant':
+    AMbehalf_of = '{} {}'.format(AMapplicant_first_name, AMapplicant_last_name)
+  elif AMrepresenting == 'Respondent':
+    AMbehalf_of = '{} {}'.format(AMrespondent_first_name, AMrespondent_last_name)
+  else:
+    AMbehalf_of = 'Bad value for AMrepresenting: {}'.format(AMrepresenting)
+---
+  
+  
+  
+  
+  
+  
+  
+  
