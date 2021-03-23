@@ -36,14 +36,11 @@ subquestion: |
   This is the first or 'Welcome' screen that the user
   sees when they run the app.  This screen should describe
   what the app does to the user.
-
   The screen may also need to include a disclaimer, particularly
   as this app is providing legal advice.
-
   The screen should contain a click-through agreement indicating
   the user agrees to the disclaimer and any other terms before
   proceeding.
-
   The screen should also give the user the option to exit the
   app at this point
 buttons:
@@ -59,19 +56,18 @@ buttons:
 mandatory: True
 code: |
   # Ask the initial questions
-  MJFsue_reason
+  AMsue_reason
   # We need to split off here depending on what the user
   # answered
-  if MJFsue_reason == 'MJFpromisor':
+  if AMsue_reason == 'AMpromisor':
     # Students will need to put logic in here
     # for the promisor part of the code
     pass
-  elif MJFsue_reason == 'MJFpromisee':
+  elif AMsue_reason == 'AMpromisee':
     # This is right side of the flowchart.  Off we go!
-
     # First we ask the prelimiary questions
-    MJFwork_requested
-    MJFpayment_agreed
+    AMwork_requested
+    AMpayment_agreed
     
     # Now we can implement contract law as code.  Contract law
     # states that we can only have a contract if we have
@@ -89,15 +85,13 @@ code: |
     # many ANDs joined together, python evaluates them left to right
     # and stops as soon as it finds a False.  We can use this property
     # to control how many questions we ask
-    if MJFcertainty == 'MJFagree_exact' and MJFconsideration == True and MJFcapacity == True:
-      MJFcontract_exists = True
+    if AMcertainty == 'AMagree_exact' and AMconsideration == True and AMcapacity == True:
+      AMcontract_exists = True
     else:
-      MJFcontract_exists = False
-
+      AMcontract_exists = False
     # Now we know whether there is a contract or not we can display
     # the final screen that contains a result and an explanation of why
     endpoints['final_screen']
-
   else:
     # We should never end up at this else statement as MJFsue_reason
     # should only ever be one of the two values above.  But if we've
@@ -105,7 +99,6 @@ code: |
     # triggered.  That's useful to us as as it will explain what's
     # gone wrong if we have made a typo or other error.  It'd be
     # much harder to find otherwise.
-
-    error_message = 'Unknown value in MJFsue_reason: {}'.format(MJFsue_reason)
+    error_message = 'Unknown value in MJFsue_reason: {}'.format(AMsue_reason)
     endpoints['error_screen']
 ---

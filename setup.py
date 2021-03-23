@@ -45,7 +45,7 @@ def find_package_data(where='.', package='', exclude=standard_exclude, exclude_d
 setup(name='docassemble.manu0083',
       version='0.0.1',
       description=('A docassemble extension.'),
-      long_description='c2_assessment files X1.01(breach of contract)',
+      long_description='# docassemble.manu0083\n\nA docassemble extension.\n\n## Author\n\nAishwarya Manumari, manu0083@flinders.edu.au\n\n',
       long_description_content_type='text/markdown',
       author='Aishwarya Manumari',
       author_email='manu0083@flinders.edu.au',
