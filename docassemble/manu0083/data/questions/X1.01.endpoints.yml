@@ -47,6 +47,7 @@ buttons:
   - Restart: restart
   - Exit: exit
 ---
+
 # Text to display explaining that a written contract is not necessary
 # when suing for breach of contract.
 template: AMwritten_contract_template

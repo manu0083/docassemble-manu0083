@@ -40,6 +40,7 @@ fields:
 under: |
   If you have not yet paid anything, just leave the default value of $0.00
 ---
+
 # Test for Offer and Acceptance
 # This code is going to ask two questions to make sure that
 question: Did the other person agree to do this work?

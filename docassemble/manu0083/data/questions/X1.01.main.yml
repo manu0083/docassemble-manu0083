@@ -31,18 +31,14 @@ include:
 # Ideally, there should never be more than two - a welcome 
 # screen and a code block to drive the app.
 mandatory: True
-question: Breach of Contract App
+question: Welcome!
 subquestion: |
-  This is the first or 'Welcome' screen that the user
-  sees when they run the app.  This screen should describe
-  what the app does to the user.
-  The screen may also need to include a disclaimer, particularly
-  as this app is providing legal advice.
-  The screen should contain a click-through agreement indicating
-  the user agrees to the disclaimer and any other terms before
-  proceeding.
-  The screen should also give the user the option to exit the
-  app at this point
+  Welcome to the Breach of Contract Application, helps the user to fill out details of the occureccence in their breach of contract for the work that wasn't paid or for someone who hasn't paid for their work
+  
+  ***Disclaimer:***
+  **This advice is not to be taken as genuine legal advice and is not a substitute for you seeking independent legal advice.**
+  
+  If you continue you accept these terms.
 buttons:
   - I agree and wish to continue: continue
   - I do not agree and wish to exit: exit
@@ -57,25 +53,24 @@ mandatory: True
 code: |
   # Ask the initial questions
   AMsue_reason
-  # We need to split off here depending on what the user
-  # answered
+  #'AMpromisor' left side for me to built 
   if AMsue_reason == 'AMpromisor':
-    # Students will need to put logic in here
-    # for the promisor part of the code
     pass
-  elif AMsue_reason == 'AMpromisee':
-    # This is right side of the flowchart.  Off we go!
-    # First we ask the prelimiary questions
+  elif AMsue_reason == 'AMpromisee': #I paid for the work that wasn't done,rightside 
     AMwork_requested
     AMpayment_agreed
     
+  #if AMsue_reason == 'AMpromisee' or AMsue_reason == 'AMpromisor':
+    # This is right side of the flowchart.  Off we go!
+    # First we ask the prelimiary questions
     # Now we can implement contract law as code.  Contract law
     # states that we can only have a contract if we have
     # Offer and Acceptance AND consideration AND Agreement AND Capacity
     # All four elements must be present in order for a contract to exist.
     # Conversely, if any of the four is not present then there is not
     # a contract.  
-    #
+    #AMwork_requested
+    #AMpayment_agreed
     # This means we only need to ask questions until we find that one
     # of those elements doesn't exist.  For example, if there was no
     # consideration, there's no point asking about capacity or agreement.
@@ -89,6 +84,8 @@ code: |
       AMcontract_exists = True
     else:
       AMcontract_exists = False
+    
+      
     # Now we know whether there is a contract or not we can display
     # the final screen that contains a result and an explanation of why
     endpoints['final_screen']
@@ -99,6 +96,6 @@ code: |
     # triggered.  That's useful to us as as it will explain what's
     # gone wrong if we have made a typo or other error.  It'd be
     # much harder to find otherwise.
-    error_message = 'Unknown value in MJFsue_reason: {}'.format(AMsue_reason)
+    error_message = 'Unknown value in AMsue_reason: {}'.format(AMsue_reason)
     endpoints['error_screen']
 ---
