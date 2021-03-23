@@ -54,13 +54,13 @@ code: |
   # Ask the initial questions
   AMsue_reason
   #'AMpromisor' left side for me to built 
-  if AMsue_reason == 'AMpromisor':
-    pass
-  elif AMsue_reason == 'AMpromisee': #I paid for the work that wasn't done,rightside 
-    AMwork_requested
-    AMpayment_agreed
+  #if AMsue_reason == 'AMpromisor':
+    #pass
+  #elif AMsue_reason == 'AMpromisee': #I paid for the work that wasn't done,rightside 
+    #AMwork_requested
+    #AMpayment_agreed
     
-  #if AMsue_reason == 'AMpromisee' or AMsue_reason == 'AMpromisor':
+  if AMsue_reason == 'AMpromisee' or AMsue_reason == 'AMpromisor':
     # This is right side of the flowchart.  Off we go!
     # First we ask the prelimiary questions
     # Now we can implement contract law as code.  Contract law
@@ -69,8 +69,8 @@ code: |
     # All four elements must be present in order for a contract to exist.
     # Conversely, if any of the four is not present then there is not
     # a contract.  
-    #AMwork_requested
-    #AMpayment_agreed
+    AMwork_requested
+    AMpayment_agreed
     # This means we only need to ask questions until we find that one
     # of those elements doesn't exist.  For example, if there was no
     # consideration, there's no point asking about capacity or agreement.
